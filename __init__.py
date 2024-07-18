@@ -86,7 +86,7 @@ class VocalSeparationNode:
     def separate(self,music,model_type,batch_size,if_mirror):
         torch.backends.cudnn.benchmark = True
         if model_type in ['mel_band_roformer','bs_roformer']:
-            config_path = os.path.join(configs_dir,config_path_dict[model_type][0])
+            config_path = os.path.join(configs_dir,"viperx",config_path_dict[model_type][0])
             model_url = ("https://mirror.ghproxy.com/" if if_mirror else "") + config_path_dict[model_type][1]
             model_path = os.path.join(models_dir,model_url.split("/")[-1])
         else:
