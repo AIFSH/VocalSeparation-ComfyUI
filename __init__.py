@@ -3,7 +3,6 @@ import sys
 import urllib.request
 import torch
 import torchaudio
-import urllib3.request
 import cuda_malloc
 import numpy as np
 import urllib
