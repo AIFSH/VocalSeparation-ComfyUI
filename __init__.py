@@ -147,8 +147,7 @@ class VocalSeparationNode:
                     estimates = estimates * std + mean
         
         estimates_mono = estimates.mean(1)
-        estimates_t = torch.Tensor(estimates_mono).unsqueeze(0).unsqueeze(0)
-        # print(estimates_t.shape)
+        estimates_t = torch.tensor(estimates_mono,dtype=torch.float32).unsqueeze(0).unsqueeze(0)
         vocals = {
             "waveform":estimates_t,
             "sample_rate": target_sr
@@ -160,6 +159,7 @@ class VocalSeparationNode:
             "sample_rate": target_sr
         }
         self.model.to("cpu")
+        torch.backends.cudnn.benchmark = False
         return (vocals,instrumental,)
 
 NODE_CLASS_MAPPINGS = {
