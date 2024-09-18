@@ -162,6 +162,50 @@ class VocalSeparationNode:
         torch.backends.cudnn.benchmark = False
         return (vocals,instrumental,)
 
+class CombineAudioNode:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required":{
+                "vocal":("AUDIO",),
+                "instrumental":("AUDIO",)
+            }
+        }
+    
+    RETURN_TYPES = ("AUDIO",)
+
+    FUNCTION = "combine"
+
+    #OUTPUT_NODE = False
+
+    CATEGORY = "AIFSH_VocalSeparation"
+
+    def audio2numpy(self,audio,target_sr):
+        audio_data = audio["waveform"].squeeze(0)
+        audio_rate = audio['sample_rate']
+        
+        if audio_rate != target_sr:
+            audio_data = torchaudio.transforms.Resample(audio_rate,target_sr)(audio_data)
+        
+        mix = audio_data.numpy()[0]
+        print(mix.shape)
+        return mix
+
+    def combine(self,vocal,instrumental):
+        target_sr = 44100
+        vocal_np = self.audio2numpy(vocal,target_sr)
+        instrumental_np = self.audio2numpy(instrumental,target_sr)
+
+        total_np = vocal_np + instrumental_np[:vocal_np.shape[0]]
+
+        res_audio = {
+            "waveform":torch.tensor(total_np).unsqueeze(0).unsqueeze(0),
+            "sample_rate": target_sr
+        }
+        return (res_audio,)
+
+
 NODE_CLASS_MAPPINGS = {
+    "CombineAudioNode":CombineAudioNode,
     "VocalSeparationNode": VocalSeparationNode
 }
