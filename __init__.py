@@ -195,8 +195,14 @@ class CombineAudioNode:
         target_sr = 44100
         vocal_np = self.audio2numpy(vocal,target_sr)
         instrumental_np = self.audio2numpy(instrumental,target_sr)
+        dur = vocal_np.shape[0] - instrumental_np.shape[0]
+        slient_np = np.zeros(abs(dur))
+        if dur < 0:
+            vocal_np = np.concatenate([vocal_np, slient_np])[:instrumental_np.shape[0]]
+        else:
+            instrumental_np = np.concatenate([instrumental_np,slient_np])[:vocal_np.shape[0]]
 
-        total_np = vocal_np + instrumental_np[:vocal_np.shape[0]]
+        total_np = vocal_np + instrumental_np
 
         res_audio = {
             "waveform":torch.tensor(total_np).unsqueeze(0).unsqueeze(0),
