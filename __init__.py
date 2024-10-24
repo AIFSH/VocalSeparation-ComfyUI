@@ -6,10 +6,11 @@ import torchaudio
 import cuda_malloc
 import numpy as np
 import urllib
+import folder_paths
 from .mss.utils import get_model_from_config,demix_track,demix_track_demucs
 
 now_dir = os.path.dirname(os.path.abspath(__file__))
-models_dir = os.path.join(now_dir, "pretrained_models")
+models_dir = os.path.join(folder_paths.models_dir,"AIFSH", "Music-Source-Separation-Training")
 os.makedirs(models_dir,exist_ok=True)
 
 base_url = "https://github.com/ZFTurbo/Music-Source-Separation-Training/releases/download/v1.0.0/"

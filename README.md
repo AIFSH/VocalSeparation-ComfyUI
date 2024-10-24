@@ -8,4 +8,4 @@ git clone https://github.com/AIFSH/VocalSeparation-ComfyUI.git
 cd VocalSeparation-ComfyUI
 pip install -r requirements.txt
 ```
-weights will be downloaded from github
+weights will be downloaded from github automatically
