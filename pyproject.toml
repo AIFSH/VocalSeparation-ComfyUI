@@ -1,0 +1,15 @@
+[project]
+name = "vocalseparation-comfyui"
+description = "a custom node for separation vocals from music based on [a/ZFTurbo/Music-Source-Separation-Training](https://github.com/ZFTurbo/Music-Source-Separation-Training)"
+version = "1.0.0"
+license = {file = "LICENSE"}
+dependencies = ["numpy", "pandas", "scipy", "ml_collections", "tqdm", "segmentation_models_pytorch", "timm", "audiomentations", "pedalboard", "omegaconf", "beartype", "rotary_embedding_torch", "einops", "demucs", "transformers", "torchmetrics", "spafe", "protobuf", "torch_audiomentations", "asteroid", "auraloss", "torchseg"]
+
+[project.urls]
+Repository = "https://github.com/AIFSH/VocalSeparation-ComfyUI"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "VocalSeparation-ComfyUI"
+Icon = ""
